@@ -8,16 +8,22 @@ from PySide6.QtGui import QMouseEvent
 from ui.main_form import Ui_MainWindow
 from ui.main_widget_form import Ui_Form
 
-
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 class MainwindowWidget(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         # frame 7, 10, 500, 380 -> 520, 10, 40, 40
-        cwd = os.getcwd().replace("\\", "/")
-        self.show_btn_img_path = cwd + "/img/memo_4.png"
-        self.close_btn_img_path = cwd + "/img/X.png"
+        self.show_btn_img_path = resource_path("img/memo_4.png").replace("\\", "/")
+        self.close_btn_img_path = resource_path("img/X.png").replace("\\", "/")
         self.pushButton_show.setStyleSheet(u"QPushButton{\n"
 "border:3px solid #ffffff;\n"
 "border-radius:20px;\n"
