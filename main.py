@@ -1,10 +1,11 @@
 import sys
 import os
 import json
+import ctypes
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton
 from PySide6.QtCore import QPropertyAnimation, QRect, Slot, Qt, QTimer, QObject, Signal
-from PySide6.QtGui import QMouseEvent
+from PySide6.QtGui import QMouseEvent, QPixmap
 
 from ui.main_form import Ui_MainWindow
 from ui.main_widget_form import Ui_MainWidget
@@ -220,6 +221,9 @@ class Mainwindow(QMainWindow, Ui_MainWindow):
         self.statusBar().hide()
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        myappid = 'ddatg memo' # arbitrary string
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 
         self.document_path = os.path.join(os.path.expandvars("%userprofile%"),"documents")
         self.memo_path = os.path.join(os.path.expandvars("%userprofile%"),"documents","ddatg","memo.json")        
@@ -301,4 +305,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Mainwindow()
     window.show()
+    ico = resource_path("img/memo_3.png")
+    app.setWindowIcon(QPixmap(ico))
     app.exec()
