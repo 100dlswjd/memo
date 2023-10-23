@@ -55,7 +55,8 @@ class MainwindowWidget(QWidget, Ui_MainWidget):
         self.setupUi(self)
         # frame 7, 10, 500, 380 -> 520, 10, 40, 40
         self.show_btn_img_path = resource_path("img/memo_4.png").replace("\\", "/")
-        self.close_btn_img_path = resource_path("img/X.png").replace("\\", "/")        
+        self.x_btn_img_path = resource_path("img/X.png").replace("\\", "/")        
+        self.close_btn_img_path = resource_path("img/close.png").replace("\\", "/")
         self.pushButton_show.setStyleSheet(u"QPushButton{\n"
 "border:3px solid #ffffff;\n"
 "border-radius:20px;\n"
@@ -74,7 +75,7 @@ f"image:url(\"{self.show_btn_img_path}\");\n"
 "border-radius:20px;\n"
 "padding:10px;\n"
 "background-color:#00da3e;\n"
-f"image:url(\"{self.close_btn_img_path}\");\n"
+f"image:url(\"{self.x_btn_img_path}\");\n"
 "}\n"
 "QPushButton:hover{\n"
 "background-color:#00c538;\n"
@@ -98,6 +99,32 @@ f"image:url(\"{self.plus_btn_img_path}\");"
 "QPushButton:Pressed{"
 "background-color:#2caa50;"
 "}")        
+        
+        self.tabWidget_memo.setStyleSheet(u"QTabBar:tab{"
+"border:2px solid #ffffff;"
+"border-radius:10px;"
+"width:80px;"
+"height:20px;"
+"background-color:#47f279;"
+"}"
+"QTabBar:tab:hover{"
+"background-color:#3dd167;"
+"}"
+"QTabBar:tab:Pressed{"
+"background-color:#35b85a;"
+"}"
+"QTabWidget:pane {"
+"border:none;"
+"border-radius:none;"
+"padding:0px"
+"}"
+"QTabBar:tab:selected{"
+"background-color:#00a72f;"
+"color:#ffffff;"
+"}"
+"QTabBar:close-button{"
+f"image:url(\"{self.close_btn_img_path}\");"
+"}")
 
         self.show_flag = False
         self.use_check = 0

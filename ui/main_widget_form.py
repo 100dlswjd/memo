@@ -66,31 +66,7 @@ class Ui_MainWidget(object):
         self.verticalLayout.setContentsMargins(4, 4, 4, 4)
         self.tabWidget_memo = QTabWidget(self.frame_main)
         self.tabWidget_memo.setObjectName(u"tabWidget_memo")
-        self.tabWidget_memo.setStyleSheet(u"QTabBar:tab{\n"
-"border:2px solid #ffffff;\n"
-"border-radius:10px;\n"
-"width:80px;\n"
-"height:20px;\n"
-"background-color:#47f279;\n"
-"}\n"
-"QTabBar:tab:hover{\n"
-"background-color:#3dd167;\n"
-"}\n"
-"QTabBar:tab:Pressed{\n"
-"background-color:#35b85a;\n"
-"}\n"
-"QTabWidget:pane {\n"
-"border:none;\n"
-"border-radius:none;\n"
-"padding:0px\n"
-"}\n"
-"QTabBar:tab:selected{\n"
-"background-color:#00a72f;\n"
-"color:#ffffff;\n"
-"}\n"
-"QTabBar:close-button{\n"
-"image:url(\"D:/git/100dlswjd/memo/img/close.png\");\n"
-"}")
+        self.tabWidget_memo.setStyleSheet(u"")
 
         self.verticalLayout.addWidget(self.tabWidget_memo)
 

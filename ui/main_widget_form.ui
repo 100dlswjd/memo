@@ -112,31 +112,7 @@ border-radius:20px;
       <item>
        <widget class="QTabWidget" name="tabWidget_memo">
         <property name="styleSheet">
-         <string notr="true">QTabBar:tab{
-border:2px solid #ffffff;
-border-radius:10px;
-width:80px;
-height:20px;
-background-color:#47f279;
-}
-QTabBar:tab:hover{
-background-color:#3dd167;
-}
-QTabBar:tab:Pressed{
-background-color:#35b85a;
-}
-QTabWidget:pane {
-border:none;
-border-radius:none;
-padding:0px
-}
-QTabBar:tab:selected{
-background-color:#00a72f;
-color:#ffffff;
-}
-QTabBar:close-button{
-image:url(&quot;D:/git/100dlswjd/memo/img/close.png&quot;);
-}</string>
+         <string notr="true"/>
         </property>
         <property name="currentIndex">
          <number>-1</number>
