@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout,
     QLabel, QPushButton, QSizePolicy, QSpacerItem,
-    QTabWidget, QVBoxLayout, QWidget)
+    QSpinBox, QTabWidget, QVBoxLayout, QWidget)
 
 class Ui_MainWidget(object):
     def setupUi(self, MainWidget):
@@ -137,6 +137,31 @@ class Ui_MainWidget(object):
 
         self.horizontalLayout.addWidget(self.checkBox_auto)
 
+        self.spinBox_auto_time = QSpinBox(self.frame_main)
+        self.spinBox_auto_time.setObjectName(u"spinBox_auto_time")
+        self.spinBox_auto_time.setEnabled(True)
+        self.spinBox_auto_time.setMinimumSize(QSize(40, 20))
+        self.spinBox_auto_time.setMaximumSize(QSize(40, 20))
+        self.spinBox_auto_time.setStyleSheet(u"")
+        self.spinBox_auto_time.setValue(10)
+
+        self.horizontalLayout.addWidget(self.spinBox_auto_time)
+
+        self.label_sec = QLabel(self.frame_main)
+        self.label_sec.setObjectName(u"label_sec")
+        sizePolicy.setHeightForWidth(self.label_sec.sizePolicy().hasHeightForWidth())
+        self.label_sec.setSizePolicy(sizePolicy)
+        self.label_sec.setStyleSheet(u"QLabel{\n"
+"border:none;\n"
+"background-color:none;\n"
+"color:rgb(0, 218, 62)\n"
+"}\n"
+"QLabel:hover{\n"
+"color:#000000;\n"
+"}")
+
+        self.horizontalLayout.addWidget(self.label_sec)
+
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
@@ -178,6 +203,7 @@ class Ui_MainWidget(object):
         self.label_error.setText(QCoreApplication.translate("MainWidget", u"\ubc84\uadf8 \ubb38\uc758\ub294 \ub543\uc950\uc5d0\uac8c", None))
         self.checkBox_floating.setText(QCoreApplication.translate("MainWidget", u"\ud56d\uc0c1 \uc704", None))
         self.checkBox_auto.setText(QCoreApplication.translate("MainWidget", u"\uc790\ub3d9 \ucd95\uc18c", None))
+        self.label_sec.setText(QCoreApplication.translate("MainWidget", u"\ucd08", None))
         self.pushButton_close.setText("")
     # retranslateUi
 
