@@ -46,7 +46,7 @@ class MemoWidget(QWidget, Ui_memo):
         
     @Slot()
     def textEdit_memo_text_changed_handler(self):
-        title = self.textEdit_memo.toPlainText()[:4]
+        title = self.textEdit_memo.toPlainText().replace("\n", "    ")[:4]
         self.memo.MemoTitleChanged.emit([self.index, title])
 
 class MainwindowWidget(QWidget, Ui_MainWidget):
@@ -57,6 +57,11 @@ class MainwindowWidget(QWidget, Ui_MainWidget):
         self.show_btn_img_path = resource_path("img/memo_4.png").replace("\\", "/")
         self.x_btn_img_path = resource_path("img/X.png").replace("\\", "/")        
         self.close_btn_img_path = resource_path("img/close.png").replace("\\", "/")
+        self.up_btn_img_path = resource_path("img/up.png").replace("\\", "/")
+        self.down_btn_img_path = resource_path("img/down.png").replace("\\", "/")
+        self.up_hover_btn_img_path = resource_path("img/up_hover.png").replace("\\", "/")
+        self.down_hover_btn_img_path = resource_path("img/down_hover.png").replace("\\", "/")
+
         self.pushButton_show.setStyleSheet(u"QPushButton{\n"
 "border:3px solid #ffffff;\n"
 "border-radius:20px;\n"
@@ -124,6 +129,32 @@ f"image:url(\"{self.plus_btn_img_path}\");"
 "}"
 "QTabBar:close-button{"
 f"image:url(\"{self.close_btn_img_path}\");"
+"}"
+"QTabBar:scroller{"
+"width:0px;"
+"}")
+
+        self.spinBox_auto_time.setEnabled(False)
+        self.spinBox_auto_time.setMinimum(10)
+        self.spinBox_auto_time.setStyleSheet(u"QSpinBox{\n"
+"border:2px solid #ffffff;\n"
+"border-radius:6px;\n"
+"background-color:#8ef7ad;\n"
+"color:#409047;\n"
+"}\n"
+"QSpinBox:up-button{\n"
+"border:0px;\n"
+f"image:url(\"{self.up_btn_img_path}\");\n"
+"}\n"
+"QSpinBox:up-button:hover{\n"
+f"image:url(\"{self.up_hover_btn_img_path}\");\n"
+"}\n"
+"QSpinBox:down-button{\n"
+"border:0px;\n"
+f"image:url(\"{self.down_btn_img_path}\");\n"
+"}\n"
+"QSpinBox:down-button:hover{\n"
+f"image:url(\"{self.down_hover_btn_img_path}\");\n"
 "}")
 
         self.show_flag = False
@@ -132,6 +163,8 @@ f"image:url(\"{self.close_btn_img_path}\");"
 
         self.tabWidget_memo.setTabsClosable(False)
         self.tabWidget_memo.setCornerWidget(self.pushButton_add_tab)
+
+        self.checkBox_auto.stateChanged.connect(self.checkBox_auto_handler)        
 
         self.tabWidget_memo.tabCloseRequested.connect(self.tabWidget_memo_close_handler)
         self.pushButton_show.clicked.connect(self.btn_show_click_handler)
@@ -149,7 +182,13 @@ f"image:url(\"{self.close_btn_img_path}\");"
         self.memo_3 = ""
         self.memo_4 = ""
         self.memo_5 = ""
-    
+    @Slot()
+    def checkBox_auto_handler(self):
+        if self.checkBox_auto.checkState() == Qt.CheckState.Checked:
+            self.spinBox_auto_time.setEnabled(True)
+        else:
+            self.spinBox_auto_time.setEnabled(False)
+
     def tabWidget_memo_close_handler(self, index):
         self.tabWidget_memo.removeTab(index)
         self.tab_list.pop(index)
@@ -197,7 +236,7 @@ f"image:url(\"{self.close_btn_img_path}\");"
     @Slot()
     def timeout_handler(self):
         self.use_check += 1
-        if self.use_check >= 10 and self.show_flag and self.checkBox_auto.checkState() == Qt.CheckState.Checked:
+        if self.use_check >= self.spinBox_auto_time.value() and self.show_flag and self.checkBox_auto.checkState() == Qt.CheckState.Checked:
             self.pushButton_show.click()
         
         try:
