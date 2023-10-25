@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QSizePolicy,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QPlainTextEdit,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_memo(object):
     def setupUi(self, memo):
@@ -42,21 +42,39 @@ class Ui_memo(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.textEdit_memo = QTextEdit(self.frame_memo)
-        self.textEdit_memo.setObjectName(u"textEdit_memo")
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit_memo.sizePolicy().hasHeightForWidth())
-        self.textEdit_memo.setSizePolicy(sizePolicy)
-        self.textEdit_memo.setStyleSheet(u"QTextEdit{\n"
+        self.plainTextEdit_memo = QPlainTextEdit(self.frame_memo)
+        self.plainTextEdit_memo.setObjectName(u"plainTextEdit_memo")
+        self.plainTextEdit_memo.setStyleSheet(u"QPlainTextEdit{\n"
 "border:3px solid #ffffff;\n"
 "border-radius:16px;\n"
 "background-color:#ffffff;\n"
 "padding:5px 10px 5px 10px;\n"
-"}")
+"}\n"
+"QAbstractScrollArea{\n"
+"background-color:#ffffff;\n"
+"}\n"
+"QScrollBar{\n"
+"background-color:#ffffff;\n"
+"}\n"
+"QScrollBar:sub-line{\n"
+"border:none;\n"
+"background-color:none;\n"
+"}\n"
+"QScrollBar:add-line{\n"
+"border:none;\n"
+"background-color:none;\n"
+"}\n"
+"QScrollBar:handle{\n"
+"background-color:#7af69e;\n"
+"border:1px solid #f3f3f3;\n"
+"border-radius:8px;\n"
+"}\n"
+"QScrollBar:handle:Pressed{\n"
+"background-color:#6ddd8d;\n"
+"}\n"
+"")
 
-        self.horizontalLayout_2.addWidget(self.textEdit_memo)
+        self.horizontalLayout_2.addWidget(self.plainTextEdit_memo)
 
 
         self.verticalLayout.addWidget(self.frame_memo)
@@ -69,5 +87,6 @@ class Ui_memo(object):
 
     def retranslateUi(self, memo):
         memo.setWindowTitle(QCoreApplication.translate("memo", u"Form", None))
+        self.plainTextEdit_memo.setPlainText("")
     # retranslateUi
 

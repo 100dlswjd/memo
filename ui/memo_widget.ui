@@ -65,20 +65,40 @@ border:none;
        <number>0</number>
       </property>
       <item>
-       <widget class="QTextEdit" name="textEdit_memo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QPlainTextEdit" name="plainTextEdit_memo">
         <property name="styleSheet">
-         <string notr="true">QTextEdit{
+         <string notr="true">QPlainTextEdit{
 border:3px solid #ffffff;
 border-radius:16px;
 background-color:#ffffff;
 padding:5px 10px 5px 10px;
-}</string>
+}
+QAbstractScrollArea{
+background-color:#ffffff;
+}
+QScrollBar{
+background-color:#ffffff;
+}
+QScrollBar:sub-line{
+border:none;
+background-color:none;
+}
+QScrollBar:add-line{
+border:none;
+background-color:none;
+}
+QScrollBar:handle{
+background-color:#7af69e;
+border:1px solid #f3f3f3;
+border-radius:8px;
+}
+QScrollBar:handle:Pressed{
+background-color:#6ddd8d;
+}
+</string>
+        </property>
+        <property name="plainText">
+         <string/>
         </property>
        </widget>
       </item>
