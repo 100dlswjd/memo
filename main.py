@@ -34,19 +34,42 @@ class MemoWidget(QWidget, Ui_memo):
 "border:none;\n"
 "\n"
 "}")
-        self.textEdit_memo.setStyleSheet(u"QTextEdit{\n"
+        self.plainTextEdit_memo.setStyleSheet(u"QPlainTextEdit{\n"
 "border:3px solid #ffffff;\n"
 "border-radius:16px;\n"
 "background-color:#ffffff;\n"
 "padding:5px 10px 5px 10px;\n"
-"}")
+"}\n"
+"QAbstractScrollArea{\n"
+"background-color:#ffffff;\n"
+"}\n"
+"QScrollBar{\n"
+"background-color:#ffffff;\n"
+"}\n"
+"QScrollBar:sub-line{\n"
+"border:none;\n"
+"background-color:none;\n"
+"}\n"
+"QScrollBar:add-line{\n"
+"border:none;\n"
+"background-color:none;\n"
+"}\n"
+"QScrollBar:handle{\n"
+"background-color:#7af69e;\n"
+"border:1px solid #f3f3f3;\n"
+"border-radius:8px;\n"
+"}\n"
+"QScrollBar:handle:Pressed{\n"
+"background-color:#6ddd8d;\n"
+"}\n"
+"")
         self.memo = MemoSignal()
         self.index = 0
-        self.textEdit_memo.textChanged.connect(self.textEdit_memo_text_changed_handler)
+        self.plainTextEdit_memo.textChanged.connect(self.plainTextEdit_memo_text_changed_handler)
         
     @Slot()
-    def textEdit_memo_text_changed_handler(self):
-        title = self.textEdit_memo.toPlainText().replace("\n", "    ")[:4]
+    def plainTextEdit_memo_text_changed_handler(self):
+        title = self.plainTextEdit_memo.toPlainText().replace("\n", "    ")[:4]
         self.memo.MemoTitleChanged.emit([self.index, title])
 
 class MainwindowWidget(QWidget, Ui_MainWidget):
@@ -182,6 +205,8 @@ f"image:url(\"{self.down_hover_btn_img_path}\");\n"
         self.memo_3 = ""
         self.memo_4 = ""
         self.memo_5 = ""
+        self.text_changed = False
+
     @Slot()
     def checkBox_auto_handler(self):
         if self.checkBox_auto.checkState() == Qt.CheckState.Checked:
@@ -219,6 +244,7 @@ f"image:url(\"{self.down_hover_btn_img_path}\");\n"
         index = data[0]
         title = data[1]
         self.tabWidget_memo.setTabText(index, title)
+        self.text_changed = True
 
     @Slot()
     def btn_show_click_handler(self):
@@ -239,35 +265,40 @@ f"image:url(\"{self.down_hover_btn_img_path}\");\n"
         if self.use_check >= self.spinBox_auto_time.value() and self.show_flag and self.checkBox_auto.checkState() == Qt.CheckState.Checked:
             self.pushButton_show.click()
         
+        if self.text_changed:
+            self.save()
+            self.text_changed = False
+
+    def save(self):
         try:
-            self.memo_1 = self.tab_list[0].textEdit_memo.toPlainText()
+            self.memo_1 = self.tab_list[0].plainTextEdit_memo.toPlainText()
             if self.memo_1 == "":
                 self.memo_1 = " "
         except:
             self.memo_1 = ""
         try:
-            self.memo_2 = self.tab_list[1].textEdit_memo.toPlainText()
+            self.memo_2 = self.tab_list[1].plainTextEdit_memo.toPlainText()
             if self.memo_2 == "":
                 self.memo_2 = " "
         except:
             self.memo_2 = ""
 
         try:
-            self.memo_3 = self.tab_list[2].textEdit_memo.toPlainText()
+            self.memo_3 = self.tab_list[2].plainTextEdit_memo.toPlainText()
             if self.memo_3 == "":
                 self.memo_3 = " "
         except:
             self.memo_3 = ""
 
         try:        
-            self.memo_4 = self.tab_list[3].textEdit_memo.toPlainText()
+            self.memo_4 = self.tab_list[3].plainTextEdit_memo.toPlainText()
             if self.memo_4 == "":
                 self.memo_4 = " "
         except:
             self.memo_4 = ""
 
         try:
-            self.memo_5 = self.tab_list[4].textEdit_memo.toPlainText()
+            self.memo_5 = self.tab_list[4].plainTextEdit_memo.toPlainText()
             if self.memo_5 == "":
                 self.memo_5 = " "
         except:
@@ -321,26 +352,31 @@ class Mainwindow(QMainWindow, Ui_MainWindow):
                 self.memo_5 = self.memo_data["memo_5"]
                 if self.memo_1:
                     self.mainwidget.pushButton_add_tab.click()
-                    self.mainwidget.tab_list[0].textEdit_memo.setText(self.memo_1)
+                    self.mainwidget.tab_list[0].plainTextEdit_memo.setPlainText(self.memo_1)
                 if self.memo_2:
                     self.mainwidget.pushButton_add_tab.click()
-                    self.mainwidget.tab_list[1].textEdit_memo.setText(self.memo_2)
+                    self.mainwidget.tab_list[1].plainTextEdit_memo.setPlainText(self.memo_2)
                 if self.memo_3:
                     self.mainwidget.pushButton_add_tab.click()
-                    self.mainwidget.tab_list[2].textEdit_memo.setText(self.memo_3)
+                    self.mainwidget.tab_list[2].plainTextEdit_memo.setPlainText(self.memo_3)
                 if self.memo_4:
                     self.mainwidget.pushButton_add_tab.click()
-                    self.mainwidget.tab_list[3].textEdit_memo.setText(self.memo_4)
+                    self.mainwidget.tab_list[3].plainTextEdit_memo.setPlainText(self.memo_4)
                 if self.memo_5:
                     self.mainwidget.pushButton_add_tab.click()
-                    self.mainwidget.tab_list[4].textEdit_memo.setText(self.memo_5)
-        except:
-            pass
+                    self.mainwidget.tab_list[4].plainTextEdit_memo.setPlainText(self.memo_5)
+        except Exception as e:
+            print(e)
 
         self.frame.setContentsMargins(0, 0, 0, 0)
 
-        self.mainwidget.pushButton_close.clicked.connect(self.close)
+        self.mainwidget.pushButton_close.clicked.connect(self.close_btn_handler)
         self.mainwidget.checkBox_floating.stateChanged.connect(self.checkBox_floating_state_changed_handler)
+
+    @Slot()
+    def close_btn_handler(self):
+        self.mainwidget.save()
+        self.close()
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
         self.mainwidget.use_check = 0
